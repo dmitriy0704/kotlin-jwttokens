@@ -1,6 +1,5 @@
-package dev.folomkin.kotlinjwttokens.controller
+package dev.folomkin.kotlinjwttokens.controller.article
 
-import dev.folomkin.kotlinjwttokens.controller.article.ArticleResponse
 import dev.folomkin.kotlinjwttokens.model.Article
 import dev.folomkin.kotlinjwttokens.service.ArticleService
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,8 +15,6 @@ class ArticleController(
     @GetMapping
     fun listAll(): List<ArticleResponse> =
         articleService.findAll().map { it.toResponse() }
-
-
 
     fun Article.toResponse(): ArticleResponse {
         return ArticleResponse(

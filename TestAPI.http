@@ -2,6 +2,5 @@
 GET https://examples.http-client.intellij.net/get
     ?generated-in=IntelliJ IDEA
 
-###
-
+### Get all articles
 GET localhost:8080/api/article
