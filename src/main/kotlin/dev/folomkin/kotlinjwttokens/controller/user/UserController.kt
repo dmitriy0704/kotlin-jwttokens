@@ -49,13 +49,13 @@ class UserController(val usersService: UsersService) {
                 "Can`t found a user"
             )
     }
-    
+
     fun UserRequest.toModel(): User =
         User(
             id = UUID.randomUUID(),
             email = this.email,
             password = this.password,
-            roles = Role.USER
+            role = Role.USER
         )
 
     fun User.toResponse(): UserResponse = UserResponse(

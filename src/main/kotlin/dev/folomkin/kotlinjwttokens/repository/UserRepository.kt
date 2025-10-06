@@ -2,34 +2,41 @@ package dev.folomkin.kotlinjwttokens.repository
 
 import dev.folomkin.kotlinjwttokens.model.Role
 import dev.folomkin.kotlinjwttokens.model.User
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-class UserRepository {
+class UserRepository(
+    private val encoder: PasswordEncoder,
+    passwordEncoder: PasswordEncoder
+) {
 
     val users: MutableList<User> = mutableListOf(
         User(
             id = UUID.randomUUID(),
             email = "email-1@gmail.com",
-            password = "pass1",
-            roles = Role.USER
+            password = encoder.encode("pass1"),
+            role = Role.USER
         ),
         User(
             id = UUID.randomUUID(),
             email = "email-2@gmail.com",
-            password = "pass2",
-            roles = Role.ADMIN
+            password = encoder.encode("pass2"),
+            role = Role.ADMIN
         ),
         User(
             id = UUID.randomUUID(),
             email = "email-3@gmail.com",
-            password = "pass3",
-            roles = Role.USER
+            password = encoder.encode("pass3"),
+            role = Role.USER
         )
     )
 
-    fun save(user: User): Boolean = users.add(user)
+    fun save(user: User): Boolean {
+        val updated = user.copy(password = encoder.encode(user.password))
+        return users.add(updated)
+    }
 
     fun findByEmail(email: String): User? =
         users.firstOrNull { it.email == email }
